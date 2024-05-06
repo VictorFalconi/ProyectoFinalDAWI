@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Citas</title>
+</head>
+<body>
+<script th:src="@{/scripts/web/formcita.js}" type="text/javascript"></script>
+<nav th:replace="layout::menu"></nav>
+<div class="card">
+    <div class="card-header text-bg-primary">
+        Mantenimiento de citas:
+    </div>
+    <div class="card-body">
+        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <hr />
+        <div id="divmensaje"></div>
+        <table id="tblcita" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Fecha y Hora</th>
+                <th scope="col">Mascota</th>
+                <th scope="col">Veterinario</th>
+                <th scope="col">Actualizar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cita : ${listaCitas}">
+                <td th:text="${cita.idcita}"></td>
+                <td th:text="${cita.fechahoracita}"></td>
+                <td th:text="${cita.mascota.nombremascota}"></td>
+                <td th:text="${cita.veterinario.nombreveterinario}"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btnactualizar"
+                            th:data-idcita="${cita.idcita}"
+                            th:data-fechahoracita="${cita.fechahoracita}"
+                            th:data-citamascota="${cita.mascota.idmascota}"
+                            th:data-citaveterinario="${cita.veterinario.idveterinario}">Actualizar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal registro y actualización de producto -->
+<div class="modal fade" id="modalcita" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cita</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="datetime-local" class="form-control" id="txtfechahoracita"
+                           placeholder="name@example.com">
+                    <label for="txtfechahoracita">Ingrese fecha y hora de cita</label>
+                </div>
+                <div class="mb-3">
+                    <label for="cbomascota" class="form-label">Seleccione mascota</label>
+                    <select id="cbomascota" class="form-select" ></select>
+                </div>
+                <div class="mb-3">
+                    <label for="cboveterinario" class="form-label">Seleccione veterinario</label>
+                    <select id="cboveterinario" class="form-select" ></select>
+                </div>
+                <input type="hidden" id="hddidcita" value="0">
+                <input type="hidden" id="timezone" name="timezone" value="+00:00" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

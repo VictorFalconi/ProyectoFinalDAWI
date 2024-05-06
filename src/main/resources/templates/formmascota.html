@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Citas</title>
+</head>
+<body>
+<script th:src="@{/scripts/web/formmascota.js}" type="text/javascript"></script>
+<nav th:replace="layout::menu"></nav>
+<div class="card">
+    <div class="card-header text-bg-primary">
+        Mantenimiento de mascotas:
+    </div>
+    <div class="card-body">
+        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <hr />
+        <div id="divmensaje"></div>
+        <table id="tblmascota" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Actualizar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mascota : ${listaMascotas}">
+                <td th:text="${mascota.idmascota}"></td>
+                <td th:text="${mascota.nombremascota}"></td>
+                <td th:text="${mascota.edad}"></td>
+                <td th:text="${mascota.cliente.nombrecliente}"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btnactualizar"
+                            th:data-idmascota="${mascota.idmascota}"
+                            th:data-nombremascota="${mascota.nombremascota}"
+                            th:data-edad="${mascota.edad}"
+                            th:data-mascotacliente="${mascota.cliente.idcliente}">Actualizar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal registro y actualización de producto -->
+<div class="modal fade" id="modalmascota" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Mascota</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtnombremascota"
+                           placeholder="name@example.com">
+                    <label for="txtnombremascota">Ingrese nombre de mascota</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="txtedad"
+                           placeholder="name@example.com">
+                    <label for="txtedad">Ingrese edad de mascota</label>
+                </div>
+                <div class="mb-3">
+                    <label for="cbocliente" class="form-label">Seleccione cliente</label>
+                    <select id="cbocliente" class="form-select" ></select>
+                </div>
+                <input type="hidden" id="hddidmascota" value="0">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
